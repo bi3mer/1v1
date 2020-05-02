@@ -1,0 +1,1 @@
+mersee-twister.js comes from [https://github.com/boo1ean/mersenne-twister/blob/master/src/mersenne-twister.js](https://github.com/boo1ean/mersenne-twister/blob/master/src/mersenne-twister.js).
