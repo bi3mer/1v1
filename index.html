@@ -184,8 +184,8 @@
           let player1 = matches[i][1];
           let player2 = matches[i][2]
           
-          if(player1 in usedPlayers) continue;
-          if(player2 in usedPlayers) continue;
+          if(usedPlayers.has(player1)) continue;
+          if(usedPlayers.has(player2)) continue;
 
           usedPlayers.add(player1);
           usedPlayers.add(player2);
