@@ -29,69 +29,69 @@
             <th scope="col">PW</th>
             <th scope="col">Tito</th>
             <th scope="col">Bruce</th>
-            <th scope="col">Total</th>
+            <th scope="col">Win %</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <th scope="row">Colan</th>
-            <td>0/0</td> <!--colan-->
-            <td>0/0</td> <!--Eisner-->
-            <td>2/2</td> <!--PM-->
-            <td>0/0</td> <!--PW-->
-            <td>0/1</td> <!--Tito-->
-            <td>0/1</td> <!--Bruce-->
-            <td>2/4</td> <!--Total-->
+            <td id="cc">0/0</td> <!--colan-->
+            <td id="ce">0/0</td> <!--Eisner-->
+            <td id="cm">2/2</td> <!--PM-->
+            <td id="cw">0/0</td> <!--PW-->
+            <td id="ct">0/1</td> <!--Tito-->
+            <td id="cb">0/1</td> <!--Bruce-->
+            <td id="ctotal">2/4</td> <!--Total-->
           </tr>
           <tr>
             <th scope="row">Eisner</th>
-            <td>0/0</td> <!--colan-->
-            <td>0/0</td> <!--Eisner-->
-            <td>0/1</td> <!--PM-->
-            <td>0/1</td> <!--PW-->
-            <td>0/1</td> <!--Tito-->
-            <td>0/0</td> <!--Bruce-->
-            <td>0/3</td> <!--Total-->
+            <td id="ec">0/0</td> <!--colan-->
+            <td id="ee">0/0</td> <!--Eisner-->
+            <td id="em">0/1</td> <!--PM-->
+            <td id="ew">0/1</td> <!--PW-->
+            <td id="et">0/1</td> <!--Tito-->
+            <td id="eb">0/0</td> <!--Bruce-->
+            <td id="etotal">0/3</td> <!--Total-->
           </tr>
           <tr>
             <th scope="row">PM</th>
-            <td>0/2</td> <!--colan-->
-            <td>1/1</td> <!--Eisner-->
-            <td>0/0</td> <!--PM-->
-            <td>0/0</td> <!--PW-->
-            <td>0/0</td> <!--Tito-->
-            <td>0/1</td> <!--Bruce-->
-            <td>1/4</td> <!--Total-->
+            <td id="mc">0/2</td> <!--colan-->
+            <td id="me">1/1</td> <!--Eisner-->
+            <td id="mm">0/0</td> <!--PM-->
+            <td id="mw">0/0</td> <!--PW-->
+            <td id="mt">0/0</td> <!--Tito-->
+            <td id="mb">0/1</td> <!--Bruce-->
+            <td id="mtotal">1/4</td> <!--Total-->
           </tr>
           <tr>
             <th scope="row">PW</th>
-            <td>0/0</td> <!--colan-->
-            <td>1/1</td> <!--Eisner-->
-            <td>0/0</td> <!--PM-->
-            <td>0/0</td> <!--PW-->
-            <td>0/1</td> <!--Tito-->
-            <td>1/1</td> <!--Bruce-->
-            <td >2/3</td> <!--Total-->
+            <td id="wc">0/0</td> <!--colan-->
+            <td id="we">1/1</td> <!--Eisner-->
+            <td id="wm">0/0</td> <!--PM-->
+            <td id="ww">0/0</td> <!--PW-->
+            <td id="wt">0/1</td> <!--Tito-->
+            <td id="wb">1/1</td> <!--Bruce-->
+            <td id="wtotal" >2/3</td> <!--Total-->
           </tr>
           <tr>
             <th scope="row">Tito</th>
-            <td>1/1</td> <!--colan-->
-            <td>1/1</td> <!--Eisner-->
-            <td>0/0</td> <!--PM-->
-            <td>1/1</td> <!--PW-->
-            <td>0/0</td> <!--Tito-->
-            <td>0/0</td> <!--Bruce-->
-            <td>3/3</td> <!--Total-->
+            <td id="tc">1/1</td> <!--colan-->
+            <td id="te">1/1</td> <!--Eisner-->
+            <td id="tm">0/0</td> <!--PM-->
+            <td id="tw">1/1</td> <!--PW-->
+            <td id="tt">0/0</td> <!--Tito-->
+            <td id="tb">0/0</td> <!--Bruce-->
+            <td id="ttotal">3/3</td> <!--Total-->
           </tr>
           <tr>
             <th scope="row">Bruce</th>
-            <td>1/1</td> <!--colan-->
-            <td>0/0</td> <!--Eisner-->
-            <td>1/1</td> <!--PM-->
-            <td>0/1</td> <!--PW-->
-            <td>0/0</td> <!--Tito-->
-            <td>0/0</td> <!--Bruce-->
-            <td>2/3</td> <!--Total-->
+            <td id="bc">1/1</td> <!--colan-->
+            <td id="be">0/0</td> <!--Eisner-->
+            <td id="bm">1/1</td> <!--PM-->
+            <td id="bw">0/1</td> <!--PW-->
+            <td id="bt">0/0</td> <!--Tito-->
+            <td id="bb">0/0</td> <!--Bruce-->
+            <td id="btotal">2/3</td> <!--Total-->
           </tr>
         </tbody>
       </table>
@@ -114,8 +114,19 @@
       </div>
       <div class="col-sm">
         <center>
+          <h3>
+            Uncommon Matches
+          </h3>
+          <br/>
+          <p id="lsm0"></p>
+          <p id="lsm1"></p>
+          <p id="lsm2"></p>
+        </center>
+      </div>
+      <div class="col-sm">
+        <center>
           <button type="button" class="btn btn-outline-success" id="generate">
-            Generate Matches
+            Random Matches
           </button>
           <br/>
           <br/>
@@ -132,6 +143,33 @@
 
     <script type="text/javascript" src="mersenne-twister.js"></script>
     <script>
+      let players = ['c', 'e', 'm', 'w', 't', 'b'];
+      const matrix = [
+      // c  e  m  w  t  b
+        [0, 0, 2, 0, 0, 0], // colan
+        [0, 0, 0, 0, 0, 0], // eisner
+        [0, 1, 0, 0, 0, 0], // pm
+        [0, 1, 0, 0, 0, 1], // pw
+        [1, 1, 0, 1, 0, 0], // tito
+        [1, 0, 1, 0, 0, 0], // bruce
+      ];
+
+      // populate matrix with wins and losses for players
+      for(var i = 0; i < players.length; ++i) {
+        var wins = 0;
+        var total = 0;
+        for(var j = 0; j < players.length; ++j) {
+          wins += matrix[i][j];
+          total += matrix[i][j] + matrix[j][i];
+          $(`#${players[i]}${players[j]}`).text(`${matrix[i][j]} / ${matrix[i][j] + matrix[j][i]}`);
+        }
+        
+        $(`#${players[i]}total`).text((wins/total).toFixed(2));
+      }
+
+      // populate least played matches
+
+
       // https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array?rq=1
       const shuffle = (array, random) => {
         var currentIndex = array.length, temporaryValue, randomIndex;
