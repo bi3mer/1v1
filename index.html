@@ -143,33 +143,59 @@
 
     <script type="text/javascript" src="mersenne-twister.js"></script>
     <script>
-      let players = ['c', 'e', 'm', 'w', 't', 'b'];
-      const matrix = [
-      // c  e  m  w  t  b
-        [0, 0, 2, 0, 0, 0], // colan
-        [0, 0, 0, 0, 0, 0], // eisner
-        [0, 1, 0, 0, 0, 0], // pm
-        [0, 1, 0, 0, 0, 1], // pw
-        [1, 1, 0, 1, 0, 0], // tito
-        [1, 0, 1, 0, 0, 0], // bruce
-      ];
+      (() => {
+        let playerNames = ['colan', 'eisner', 'pm', 'pw', 'tito', 'bruce'];
+        let players = ['c', 'e', 'm', 'w', 't', 'b'];
+        const matrix = [
+        // c  e  m  w  t  b
+          [0, 0, 2, 0, 0, 0], // colan
+          [0, 0, 0, 0, 0, 0], // eisner
+          [0, 1, 0, 0, 0, 0], // pm
+          [0, 1, 0, 0, 0, 1], // pw
+          [1, 1, 0, 1, 0, 0], // tito
+          [1, 0, 1, 0, 0, 0], // bruce
+        ];
 
-      // populate matrix with wins and losses for players
-      for(var i = 0; i < players.length; ++i) {
-        var wins = 0;
-        var total = 0;
-        for(var j = 0; j < players.length; ++j) {
-          wins += matrix[i][j];
-          total += matrix[i][j] + matrix[j][i];
-          $(`#${players[i]}${players[j]}`).text(`${matrix[i][j]} / ${matrix[i][j] + matrix[j][i]}`);
+        let matches = new Array();
+
+        // populate matrix with wins and losses for players
+        for(var i = 0; i < players.length; ++i) {
+          var wins = 0;
+          var total = 0;
+          for(var j = 0; j < players.length; ++j) {
+            wins += matrix[i][j];
+            total += matrix[i][j] + matrix[j][i];
+            $(`#${players[i]}${players[j]}`).text(`${matrix[i][j]} / ${matrix[i][j] + matrix[j][i]}`);
+            
+            if(players[i] !== players[j]) {
+              matches.push([matrix[i][j] + matrix[j][i], i, j])
+            }
+          }
+          
+          $(`#${players[i]}total`).text((wins/total).toFixed(2));
         }
-        
-        $(`#${players[i]}total`).text((wins/total).toFixed(2));
-      }
 
-      // populate least played matches
+        // populate least played matches
+        matches = matches.sort((x, y) => 0.5 - Math.random()).sort((x, y) => x[0] - y[0]);
+        const usedPlayers = new Set();
+        let matchIndex = 0;
 
+        for(var i in matches) {
+          let player1 = matches[i][1];
+          let player2 = matches[i][2]
+          
+          if(player1 in usedPlayers) continue;
+          if(player2 in usedPlayers) continue;
 
+          usedPlayers.add(player1);
+          usedPlayers.add(player2);
+
+          $(`#lsm${matchIndex}`).text(`${playerNames[player1]} vs. ${playerNames[player2]}`);
+
+          ++matchIndex;
+        }
+      })();
+      
       // https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array?rq=1
       const shuffle = (array, random) => {
         var currentIndex = array.length, temporaryValue, randomIndex;
