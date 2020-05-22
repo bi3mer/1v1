@@ -125,10 +125,9 @@
       </div>
       <div class="col-sm">
         <center>
-          <button type="button" class="btn btn-outline-success" id="generate">
+          <h3>
             Random Matches
-          </button>
-          <br/>
+          </h3>
           <br/>
           <p id="0"></p>
           <p id="1"></p>
@@ -143,7 +142,63 @@
 
     <script type="text/javascript" src="mersenne-twister.js"></script>
     <script>
+      
       (() => {
+        // https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array?rq=1
+        const shuffle = (array, random) => {
+          var currentIndex = array.length, temporaryValue, randomIndex;
+
+          // While there remain elements to shuffle...
+          while (0 !== currentIndex) {
+
+            // Pick a remaining element...
+            randomIndex = Math.floor(random.random() * currentIndex);
+            // randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex -= 1;
+
+            // And swap it with the current element.
+            temporaryValue = array[currentIndex];
+            array[currentIndex] = array[randomIndex];
+            array[randomIndex] = temporaryValue;
+          }
+
+          return array;
+        }
+
+        const generateMatches = (prefix, seed) => {
+          const random = new MersenneTwister(seed);
+
+          if(seed !== undefined) {
+            random.init_seed(seed);
+          }
+
+          let people = ['colan', 'pm', 'pw', 'tito', 'bruce', 'eisner'];
+          people = shuffle(people, random);
+          
+          for(let i = 0; i <= 3; ++i) {
+            let person1 = people.pop()
+            let person2 = people.pop();
+
+            $(`#${prefix}${i}`).text(`${person1} vs. ${person2}`);
+          }
+        };
+        
+        // random match generation
+        generateMatches('', undefined);
+
+        // match of the hour
+        const date = new Date().toLocaleString("en-US", {timeZone: "America/New_York"});
+        const splitDate = date.split(', ');
+
+        const dateStringSplit = splitDate[0].split('/');
+        const month = dateStringSplit[0];
+        const day = dateStringSplit[1];
+        const year = dateStringSplit[2];
+        const hour = splitDate[1].split(':')[0];
+        const seed = `${year}${month}${day}${hour}`;
+
+        generateMatches('hr', seed);
+
         let playerNames = ['colan', 'eisner', 'pm', 'pw', 'tito', 'bruce'];
         let players = ['c', 'e', 'm', 'w', 't', 'b'];
         const matrix = [
@@ -176,7 +231,8 @@
         }
 
         // populate least played matches
-        matches = matches.sort((x, y) => 0.5 - Math.random()).sort((x, y) => x[0] - y[0]);
+        const random = new MersenneTwister(seed);
+        matches = shuffle(matches, random).sort((x, y) => x[0] - y[0]);
         const usedPlayers = new Set();
         let matchIndex = 0;
 
@@ -195,63 +251,6 @@
           ++matchIndex;
         }
       })();
-      
-      // https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array?rq=1
-      const shuffle = (array, random) => {
-        var currentIndex = array.length, temporaryValue, randomIndex;
-
-        // While there remain elements to shuffle...
-        while (0 !== currentIndex) {
-
-          // Pick a remaining element...
-          randomIndex = Math.floor(random.random() * currentIndex);
-          // randomIndex = Math.floor(Math.random() * currentIndex);
-          currentIndex -= 1;
-
-          // And swap it with the current element.
-          temporaryValue = array[currentIndex];
-          array[currentIndex] = array[randomIndex];
-          array[randomIndex] = temporaryValue;
-        }
-
-        return array;
-      }
-
-      const generateMatches = (prefix, seed) => {
-        const random = new MersenneTwister(seed);
-
-        if(seed !== undefined) {
-          random.init_seed(seed);
-        }
-
-        let people = ['colan', 'pm', 'pw', 'tito', 'bruce', 'eisner'];
-        people = shuffle(people, random);
-        
-        for(let i = 0; i <= 3; ++i) {
-          // people = shuffle(people);
-          let person1 = people.pop()
-          let person2 = people.pop();
-
-          $(`#${prefix}${i}`).text(`${person1} vs. ${person2}`);
-        }
-      };
-
-      $('#generate').click(() =>{
-        generateMatches('', undefined);
-      });
-
-      // match of the hour
-      const date = new Date().toLocaleString("en-US", {timeZone: "America/New_York"});
-      const splitDate = date.split(', ');
-
-      const dateStringSplit = splitDate[0].split('/');
-      const month = dateStringSplit[0];
-      const day = dateStringSplit[1];
-      const year = dateStringSplit[2];
-      const hour = splitDate[1].split(':')[0];
-      const seed = `${year}${month}${day}${hour}`;
-
-      generateMatches('hr', seed);
     </script>
   </body>
 </html>
